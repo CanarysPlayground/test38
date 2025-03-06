@@ -15,6 +15,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build (only for dev branch)
+        #if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/stage' || github.ref == 'refs/heads/prod'
         if: github.ref == 'refs/heads/dev'
         run: echo "Building for dev branch"
 
