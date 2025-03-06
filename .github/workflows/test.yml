@@ -1,0 +1,59 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - dev
+      - stage
+      - prod
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build (only for dev branch)
+        if: github.ref == 'refs/heads/dev'
+        run: echo "Building for dev branch"
+
+      - name: Build (only for stage branch)
+        if: github.ref == 'refs/heads/stage'
+        run: echo "Building for stage branch"
+
+      - name: Build (only for prod branch)
+        if: github.ref == 'refs/heads/prod'
+        run: echo "Building for prod branch"
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Test (only for dev branch)
+        if: github.ref == 'refs/heads/dev'
+        run: echo "Testing for dev branch"
+
+      - name: Test (only for stage branch)
+        if: github.ref == 'refs/heads/stage'
+        run: echo "Testing for stage branch"
+
+      - name: Test (only for prod branch)
+        if: github.ref == 'refs/heads/prod'
+        run: echo "Testing for prod branch"
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Deploy (only for dev branch)
+        if: github.ref == 'refs/heads/dev'
+        run: echo "Deploying for dev branch"
+
+      - name: Deploy (only for stage branch)
+        if: github.ref == 'refs/heads/stage'
+        run: echo "Deploying for stage branch"
+
+      - name: Deploy (only for prod branch)
+        if: github.ref == 'refs/heads/prod'
+        run: echo "Deploying for prod branch"
